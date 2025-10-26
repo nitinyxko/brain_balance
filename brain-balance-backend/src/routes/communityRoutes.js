@@ -1,16 +1,25 @@
+// backend/src/routes/communityRoutes.js
 import express from 'express';
-import * as communityController from '../controllers/communityController.js';
-import auth from '../middleware/auth.js';
+import Community from '../models/Community.js';
+import { ioInstance } from '../index.js'; // Make sure index.js has: export const ioInstance = ...
+
+import {
+  createCommunity,
+  getCommunities,
+  getCommunity,
+  joinCommunity,
+  createPost,
+  addComment
+} from '../controllers/communityController.js';
 
 const router = express.Router();
 
-router.use(auth); // All community routes require authentication
-
-router.post('/', communityController.createCommunity);
-router.get('/', communityController.getCommunities);
-router.get('/:id', communityController.getCommunity);
-router.post('/:id/join', communityController.joinCommunity);
-router.post('/:id/posts', communityController.createPost);
-router.post('/:communityId/posts/:postId/comments', communityController.addComment);
+// Community routes
+router.post('/', createCommunity); // create community
+router.get('/', getCommunities); // list communities
+router.get('/:id', getCommunity); // get community details (with posts)
+router.post('/:id/join', joinCommunity); // join community
+router.post('/:id/posts', createPost); // create post in community
+router.post('/:communityId/posts/:postId/comments', addComment); // add comment
 
 export default router;

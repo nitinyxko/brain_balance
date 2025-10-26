@@ -1,4 +1,5 @@
-import GameProgress from '../models/GameProgress.js';
+import  GameProgress from '../models/GameProgress.js';
+
 
 export const saveGameProgress = async (req, res) => {
   try {
